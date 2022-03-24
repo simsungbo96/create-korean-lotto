@@ -28,14 +28,20 @@ class PastRecordActivity : AppCompatActivity() {
     private var _binding: ActivityPastRecordBinding? = null
     private val binding get() = _binding!!
 
+    override fun onBackPressed() {
+        exitApp(mContext,this)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext =this
         _binding = ActivityPastRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val dec = DecimalFormat("#,###원")
 
-
+        binding.exitButton.setOnClickListener {
+            finish()
+        }
         binding.searchButton.setOnClickListener {
             if(binding.etPrNumber.text.toString() > recentDate().toString() || binding.etPrNumber.text.toString() == "0"){
                 Toast.makeText(this,"아직 진행되지 않은 회차입니다.",Toast.LENGTH_SHORT).show()

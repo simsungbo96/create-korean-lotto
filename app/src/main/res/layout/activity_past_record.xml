@@ -217,5 +217,14 @@
 
         </LinearLayout>
 
+        <android.widget.Button
+            android:layout_margin="50dp"
+            android:id="@+id/exitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_box"
+            android:text="자동생성 화면으로 돌아가기"
+            android:textColor="@color/black" />
+
     </LinearLayout>
 </layout>

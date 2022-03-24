@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
+
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.ContextCompat
 

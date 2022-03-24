@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
         clearButton.setOnClickListener {
             if (playing) {
-                Toast.makeText(this, "자동 생성 중에 번호를 추가 할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "자동 생성 중에 번호를 초기화 할 수 없습니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             pickNumberSet.clear()

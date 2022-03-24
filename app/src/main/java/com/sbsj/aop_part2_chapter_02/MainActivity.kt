@@ -1,5 +1,7 @@
 package com.sbsj.aop_part2_chapter_02
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<NumberPicker>(R.id.numberPicker)
     }
 
+    private val pastRecordButton : Button by lazy{
+        findViewById<Button>(R.id.pastButton)
+    }
+
     private val numberTextViewList : List<TextView> by lazy {
         listOf<TextView>(
             findViewById<TextView>(R.id.tv_firstPic),
@@ -44,11 +51,14 @@ class MainActivity : AppCompatActivity() {
     private var didRun = false
     private var playing = false
     private val pickNumberSet = hashSetOf<Int>()
+    private lateinit var mContext : Context
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        mContext =this
         numberPicker.minValue =1
         numberPicker.maxValue =45
 
@@ -80,6 +90,14 @@ class MainActivity : AppCompatActivity() {
         }
         initAddButton()
         initClearButton()
+        initPastButton()
+    }
+
+    private fun initPastButton() {
+        pastRecordButton.setOnClickListener {
+            var intent = Intent(this,PastRecordActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initRunButton(){
@@ -89,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             val textView = numberTextViewList[index]
             textView.text = number.toString()
             textView.isVisible =true
-            setNumberBackground(number,textView)
+            setNumberBackground(number,textView,mContext)
             if(index == 6){
                 textView.text = number.toString()
                 textView.isVisible =true
@@ -128,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                 textView.isVisible = true
                 textView.text = numberPicker.value.toString()
 
-                setNumberBackground(numberPicker.value,textView)
+                setNumberBackground(numberPicker.value,textView,mContext)
 
                 pickNumberSet.add(numberPicker.value)
 
@@ -136,16 +154,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    private fun setNumberBackground(number:Int,textView: TextView){
-        when(number){
-            in 1..10 -> textView.background = ContextCompat.getDrawable(this,R.drawable.circle_yellow)
-            in 11..20 -> textView.background = ContextCompat.getDrawable(this,R.drawable.circle_blue)
-            in 21..30 -> textView.background = ContextCompat.getDrawable(this,R.drawable.circle_red)
-            in 31..40 -> textView.background = ContextCompat.getDrawable(this,R.drawable.circle_green)
-            else -> textView.background = ContextCompat.getDrawable(this,R.drawable.circle_gray)
-        }
 
-    }
     private fun getRandomNumber(): List<Int> {
 
         val numberList = mutableListOf<Int>()
